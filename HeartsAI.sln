@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartsAI", "HeartsAI\HeartsAI.csproj", "{16A4E523-56DB-4C4F-94AD-2EEBB5749381}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hearts", "..\Hearts\Hearts\Hearts.csproj", "{10FA3451-B094-439C-9990-5A27BF2FC8E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartsConsole", "HeartsConsole\HeartsConsole.csproj", "{8CB02D4A-1495-4952-A418-2A5829F1DEF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16A4E523-56DB-4C4F-94AD-2EEBB5749381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A4E523-56DB-4C4F-94AD-2EEBB5749381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A4E523-56DB-4C4F-94AD-2EEBB5749381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A4E523-56DB-4C4F-94AD-2EEBB5749381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FA3451-B094-439C-9990-5A27BF2FC8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FA3451-B094-439C-9990-5A27BF2FC8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FA3451-B094-439C-9990-5A27BF2FC8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FA3451-B094-439C-9990-5A27BF2FC8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB02D4A-1495-4952-A418-2A5829F1DEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB02D4A-1495-4952-A418-2A5829F1DEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB02D4A-1495-4952-A418-2A5829F1DEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB02D4A-1495-4952-A418-2A5829F1DEF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C738C45F-6759-414D-A43E-45F7416C97FC}
+	EndGlobalSection
+EndGlobal
