@@ -8,5 +8,6 @@ namespace HeartsAI
     public interface INodeWeighter
     {
         void WeightNodeTree( List<Card> hand, Trick currentTrick, Node nodeTree );
+
     }
 }

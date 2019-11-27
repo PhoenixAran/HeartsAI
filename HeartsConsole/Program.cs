@@ -7,37 +7,68 @@ namespace HeartsConsole
 {
     class Program
     {
-        static void Main( string[] args )
+        static void RandomPlayerTest()
         {
-            //Set up object pools
-            Pool<Node>.WarmCache( 100 );
-            Pool<Trick>.WarmCache( 100 );
-            ListPool<Trick>.WarmCache( 100 );
-            ListPool<Card>.WarmCache( 100 );
-
+            
             //Set up random players
             var player1 = new RandomPlayer();
             var player2 = new RandomPlayer();
             var player3 = new RandomPlayer();
             var player4 = new RandomPlayer();
 
+            var points = new int[4];
+
             //Set up game
             var game = new HeartsGame();
 
             //Add the players
             game.Players.AddRange( new[] { player1, player2, player3, player4 } );
-            
 
-            for ( int i = 0; i < 13; ++i )
+
+            for ( int i = 0; i < 1000000; ++i )
             {
                 game.PlayRound();
+                for ( int j = 0; j < 4; ++j )
+                {
+                    points[j] = game.Players[j].Points;
+                }
+                game.Reset();
+
             }
 
-            Console.WriteLine( $"Player1: {player1.Points}" );
-            Console.WriteLine( $"Player2: {player2.Points}" );
-            Console.WriteLine( $"Player3: {player3.Points}" );
-            Console.WriteLine( $"Player4: {player4.Points}" );
+            Console.WriteLine( $"Player1: {points[0]}" );
+            Console.WriteLine( $"Player2: {points[1]}" );
+            Console.WriteLine( $"Player3: {points[2]}" );
+            Console.WriteLine( $"Player4: {points[3]}" );
             Console.ReadLine();
+        }
+
+        static void Main( string[] args )
+        {
+            //Set up object pools
+            Pool<Node>.WarmCache( 10000 );
+            Pool<Trick>.WarmCache( 100 );
+            ListPool<Trick>.WarmCache( 100 );
+            ListPool<Card>.WarmCache( 800 );
+
+            var smartPlayer = new SmartPlayer(null);
+            var deck = new Deck();
+
+            deck.Shuffle();
+            var list = ListPool<Card>.Obtain();
+
+            for ( int i = 0; i < 5; ++i )
+            {
+                list.Add( deck.RemoveTopCard() );
+            }
+
+            smartPlayer.GenerateTree( list );
+            smartPlayer.GenerateTree( list );
+
+
+
+
+
         }
     }
 }

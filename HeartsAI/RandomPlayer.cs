@@ -29,7 +29,7 @@ namespace HeartsAI
            
             if ( currentTrick.Count == 0 )
             {
-                if ( CanLeadHearts )
+                if ( CanLeadHearts  || HandIsAllHeartsAndQueenOfSpades() ) //|| Hand.All( c => c.Suit == Suit.Hearts ) )
                 {
                     //Just play any card
                     return Hand[_random.Next( 0, Hand.Count )];
@@ -93,5 +93,7 @@ namespace HeartsAI
 
             ListPool<Card>.Free( tempList );
         }
+
+
     }
 }
