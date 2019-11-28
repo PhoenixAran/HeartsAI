@@ -114,7 +114,7 @@ namespace HeartsAI
                 }
                 return;
             }
-            throw new Exception( "Unexpected Conditions" );
+            throw new Exception( "Unexpected Condition in LowLayer::GetPlayCard" );
         }
 
         private void WeighNodeTreeWhereLeadSuitIsVoid( int turnNumber, Trick currentTrick )
