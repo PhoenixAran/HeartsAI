@@ -104,7 +104,7 @@ namespace HeartsAI
                     {
                         if ( cardPlayed.CardRank < minCard.CardRank )
                         {
-                            child.Weight = 100 + ( minCard.CardRank - cardPlayed.CardRank );
+                            child.Weight = 100 + (14) - ( minCard.CardRank - cardPlayed.CardRank );
                         }
                         else
                         {

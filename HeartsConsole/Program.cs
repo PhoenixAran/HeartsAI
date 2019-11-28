@@ -61,7 +61,7 @@ namespace HeartsConsole
             game.Players.AddRange( new Player[] { player1, player2, player3, player4 } );
 
 
-            for ( int i = 0; i < 1000; ++i )
+            for ( int i = 0; i < 1000000; ++i )
             {
                 game.PlayRound();
                 for ( int j = 0; j < 4; ++j )
