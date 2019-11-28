@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HeartsAI
 {
-    public class Node : IPoolable, IEquatable<Node>
+    public class Node : IPoolable, IEquatable<Node>, IComparable<Node>
     {
 
         /// <summary>
@@ -14,16 +14,17 @@ namespace HeartsAI
         public int Weight { get; set; } = 0;
         public List<Node> Children { get; private set; } = new List<Node>();
         public List<Card> HandState { get; private set; } = new List<Card>();
-        
+        public Card CardPlayed { get; set; }
         public void Reset()
         {
             Weight = 0;
             HandState.Clear();
-            for( int i = Children.Count - 1; i >= 0; --i )
+            CardPlayed = null;
+            for ( int i = Children.Count - 1; i >= 0; --i )
             {
                 var childNode = Children[i];
-                childNode.Reset();
                 Pool<Node>.Free( childNode );
+                Children.RemoveAt( i );
             }
         }
 
@@ -32,14 +33,18 @@ namespace HeartsAI
             HandState.AddRange( cards );
         }
 
-        public void GenerateBranches(Dictionary<NodeKey, Node> map)
+        /// <summary>
+        /// Generates layer of nodes.
+        /// </summary>
+        public void GenerateBranches()
         {
-            if ( HandState.Count > 1)
+            if ( HandState.Count > 0 )
             {
                 var tempList = ListPool<Card>.Obtain();
 
                 for ( int i = 0; i < HandState.Count; ++i )
                 {
+                    
                     for ( int j = 0; j < HandState.Count; ++j )
                     {
                         if ( i != j )
@@ -48,31 +53,31 @@ namespace HeartsAI
                         }
                     }
 
-                    var nodeKey = Pool<NodeKey>.Obtain();
-                    nodeKey.SetCards( tempList );
-                    if ( map.TryGetValue(nodeKey, out var child) )
-                    {
-                        Children.Add( child );
-                        Pool<NodeKey>.Free( nodeKey );
-                    }
-                    else
-                    {
-                        var childNode = Pool<Node>.Obtain();
-                        childNode.SetHandState( tempList );
-                        map.Add( nodeKey, childNode );
-                        childNode.GenerateBranches(map);
-                        Children.Add( childNode );
-                    }
 
+                    var childNode = Pool<Node>.Obtain();
+                    childNode.SetHandState( tempList );
+                    childNode.CardPlayed = HandState[i];
+                    Children.Add( childNode );
                     tempList.Clear();
 
                 }
-
                 ListPool<Card>.Free( tempList );
             }
         }
 
         #region Object Overrides
+        public override bool Equals( object other )
+        {
+            return other is Node otherNode && this.Equals( otherNode );
+        }
+
+        public override int GetHashCode()
+        {
+            return 1519321917 + EqualityComparer<List<Card>>.Default.GetHashCode( HandState );
+        }
+        #endregion
+
+        #region IEquatable
         public bool Equals( Node other )
         {
             foreach ( var card in other.HandState )
@@ -84,17 +89,6 @@ namespace HeartsAI
             }
 
             return true;
-        }
-        public override int GetHashCode()
-        {
-            return 1519321917 + EqualityComparer<List<Card>>.Default.GetHashCode( HandState );
-        }
-        #endregion
-
-        #region IEquatable
-        public override bool Equals( object other )
-        {
-            return other is Node otherNode && this.Equals( otherNode );
         }
 
         public bool HandContainsCard( Card card )
@@ -108,6 +102,10 @@ namespace HeartsAI
             }
             return true;
         }
+        #endregion
+
+        #region IComparable
+        int IComparable<Node>.CompareTo( Node other ) => other.Weight.CompareTo( Weight );
         #endregion
     }
 }

@@ -31,8 +31,22 @@ namespace HeartsAI
             {
                 if ( CanLeadHearts  || HandIsAllHeartsAndQueenOfSpades() ) //|| Hand.All( c => c.Suit == Suit.Hearts ) )
                 {
-                    //Just play any card
-                    return Hand[_random.Next( 0, Hand.Count )];
+                    if ( this.HasQueenOfSpades() )
+                    {
+                        foreach ( Card card in Hand )
+                        {
+                            if ((  card.Suit == Suit.Spades && card.CardRank == Card.QUEEN ) )
+                            {
+                                return card;
+                            }
+                        }
+                      
+                    }
+                    else
+                    {
+                        return Hand[_random.Next( 0, Hand.Count )];
+                    }
+                    
                 }
                 else //Play a random card that is NOT a heart
                 {
@@ -92,6 +106,19 @@ namespace HeartsAI
             otherPlayer.QueueRecieveCards( tempList );
 
             ListPool<Card>.Free( tempList );
+        }
+
+
+        private bool HasQueenOfSpades()
+        {
+            foreach( var card in Hand )
+            {
+                if (card.CardRank == Card.QUEEN && card.Suit == Suit.Spades )
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
